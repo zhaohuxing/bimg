@@ -430,6 +430,7 @@ func vipsSave(image *C.VipsImage, o vipsSaveOptions) ([]byte, error) {
 	lossless := C.int(boolToInt(o.Lossless))
 
 	fmt.Printf("o.Type: %d, IsSave: %v\n", o.Type, IsTypeSupportedSave(o.Type))
+	fmt.Printf("o.Type: %d, IsSave: %v\n", o.Type, IsTypeSupportedSave(o.Type))
 
 	if o.Type != 0 && !IsTypeSupportedSave(o.Type) {
 		return nil, fmt.Errorf("VIPS cannot save to %#v", ImageTypes[o.Type])
