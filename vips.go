@@ -210,6 +210,9 @@ func VipsIsTypeSupportedSave(t ImageType) bool {
 	if t == HEIF {
 		return int(C.vips_type_find_save_bridge(C.HEIF)) != 0
 	}
+	if t == GIF {
+		return int(C.vips_type_find_save_bridge(C.GIF)) != 0
+	}
 	return false
 }
 
@@ -426,6 +429,8 @@ func vipsSave(image *C.VipsImage, o vipsSaveOptions) ([]byte, error) {
 	strip := C.int(boolToInt(o.StripMetadata))
 	lossless := C.int(boolToInt(o.Lossless))
 
+	fmt.Printf("o.Type: %d, IsSave: %v\n", o.Type, IsTypeSupportedSave(o.Type))
+
 	if o.Type != 0 && !IsTypeSupportedSave(o.Type) {
 		return nil, fmt.Errorf("VIPS cannot save to %#v", ImageTypes[o.Type])
 	}
@@ -439,6 +444,8 @@ func vipsSave(image *C.VipsImage, o vipsSaveOptions) ([]byte, error) {
 		saveErr = C.vips_tiffsave_bridge(tmpImage, &ptr, &length)
 	case HEIF:
 		saveErr = C.vips_heifsave_bridge(tmpImage, &ptr, &length, strip, quality, lossless)
+	case GIF:
+		saveErr = C.vips_magicksave_bridge(tmpImage, &ptr, &length)
 	default:
 		saveErr = C.vips_jpegsave_bridge(tmpImage, &ptr, &length, strip, quality, interlace)
 	}

@@ -179,6 +179,9 @@ vips_type_find_save_bridge(int t) {
 	if (t == JPEG) {
 		return vips_type_find("VipsOperation", "jpegsave_buffer");
 	}
+	if (t == GIF) {
+		return 1; 
+	}
 #if (VIPS_MAJOR_VERSION > 8 || (VIPS_MAJOR_VERSION == 8 && VIPS_MINOR_VERSION >= 8))
 	if (t == HEIF) {
 		return vips_type_find("VipsOperation", "heifsave_buffer");
@@ -283,6 +286,11 @@ int
 vips_icc_transform_bridge (VipsImage *in, VipsImage **out, const char *output_icc_profile) {
 	// `output_icc_profile` represents the absolute path to the output ICC profile file
 	return vips_icc_transform(in, out, output_icc_profile, "embedded", TRUE, NULL);
+}
+
+int
+vips_magicksave_bridge(VipsImage *in, void **buf, size_t *len) {
+	return vips_magicksave_bridge(in, buf, len);
 }
 
 int
