@@ -290,7 +290,7 @@ vips_icc_transform_bridge (VipsImage *in, VipsImage **out, const char *output_ic
 
 int
 vips_magicksave_bridge(VipsImage *in, void **buf, size_t *len) {
-	return vips_magicksave_bridge(in, buf, len, NULL);
+	return vips_magicksave_buffer(in, buf, len, NULL);
 }
 
 int
