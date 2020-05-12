@@ -764,7 +764,7 @@ func vipsGamma(image *C.VipsImage, Gamma float64) (*C.VipsImage, error) {
 
 func thumbnailImage(buf []byte, width int) (*C.VipsImage, error) {
 	var out *C.VipsImage
-	defer C.g_object_unref(C.gpointer(image))
+	defer C.g_object_unref(C.gpointer(out))
 
 	length := C.size_t(len(buf))
 	imageBuf := unsafe.Pointer(&buf[0])
