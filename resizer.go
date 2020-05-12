@@ -21,7 +21,7 @@ var (
 // with the passed options.
 func resizer(buf []byte, o Options) ([]byte, error) {
 	defer C.vips_thread_shutdown()
-
+	fmt.Pirntf("buf‘s length: %d\n", len(buf))
 	image, imageType, err := loadImage(buf)
 	if err != nil {
 		return nil, err
