@@ -27,6 +27,15 @@ func resizer(buf []byte, o Options) ([]byte, error) {
 		return nil, err
 	}
 
+	imageOut, err = thumbnailImage(image, 200)
+	if err != nil {
+		return nil, errors.New("Failed thumbnail image")
+	}
+
+	if err == nil {
+		return getGIFImageBuffer(imageOut)
+	}
+
 	// Clone and define default options
 	o = applyDefaults(o, imageType)
 

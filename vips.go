@@ -485,6 +485,23 @@ func getImageBuffer(image *C.VipsImage) ([]byte, error) {
 	return C.GoBytes(ptr, C.int(length)), nil
 }
 
+func getGIFImageBuffer(image *C.VipsImage) ([]byte, error) {
+	var ptr unsafe.Pointer
+
+	length := C.size_t(0)
+
+	err := C.int(0)
+	err = C.vips_magicksave_bridge(image, &ptr, &length)
+	if int(err) != 0 {
+		return nil, catchVipsError()
+	}
+
+	defer C.g_free(C.gpointer(ptr))
+	defer C.vips_error_clear()
+
+	return C.GoBytes(ptr, C.int(length)), nil
+}
+
 func vipsExtract(image *C.VipsImage, left, top, width, height int) (*C.VipsImage, error) {
 	var buf *C.VipsImage
 	defer C.g_object_unref(C.gpointer(image))
@@ -739,6 +756,17 @@ func vipsGamma(image *C.VipsImage, Gamma float64) (*C.VipsImage, error) {
 	defer C.g_object_unref(C.gpointer(image))
 
 	err := C.vips_gamma_bridge(image, &out, C.double(Gamma))
+	if err != 0 {
+		return nil, catchVipsError()
+	}
+	return out, nil
+}
+
+func thumbnailImage(image *C.VipsImage, width int) (*C.VipsImage, error) {
+	var out *C.VipsImage
+	defer C.g_object_unref(C.gpointer(image))
+
+	err := C.vips_thumbnail_resize(in, &out, C.int(width))
 	if err != 0 {
 		return nil, catchVipsError()
 	}
