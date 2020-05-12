@@ -22,18 +22,17 @@ var (
 func resizer(buf []byte, o Options) ([]byte, error) {
 	defer C.vips_thread_shutdown()
 	fmt.Printf("buf‘s length: %d\n", len(buf))
-	image, imageType, err := loadImage(buf)
-	if err != nil {
-		return nil, err
-	}
-
-	imageOut, err = thumbnailImage(image, 200)
+	imageOut, err := thumbnailImage(buf, 200)
 	if err != nil {
 		return nil, errors.New("Failed thumbnail image")
 	}
 
 	if err == nil {
 		return getGIFImageBuffer(imageOut)
+	}
+	image, imageType, err := loadImage(buf)
+	if err != nil {
+		return nil, err
 	}
 
 	// Clone and define default options
