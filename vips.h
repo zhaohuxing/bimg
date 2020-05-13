@@ -604,6 +604,10 @@ int vips_gamma_bridge(VipsImage *in, VipsImage **out, double exponent)
   return vips_gamma(in, out, "exponent", 1.0 / exponent, NULL);
 }
 
-int vips_thumbnail_resize(void *buf, size_t len, VipsImage **out, int width) {
-	return vips_thumbnail_buffer(buf, len, out, width, "option_string", "n=-1", NULL);
+int vips_thumbnail_resize(void *buf, size_t len, VipsImage **out, int width, int height) {
+	if (height != 0) {
+		return vips_thumbnail_buffer(buf, len, out, width, "option_string", "n=-1", NULL);
+	} else {
+		return vips_thumbnail_buffer(buf, len, out, width, "height", height, option_string", "n=-1", NULL);
+	}
 }

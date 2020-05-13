@@ -28,7 +28,7 @@ func resizer(buf []byte, o Options) ([]byte, error) {
 	}
 	if imageType == GIF {
 		fmt.Println("run this branch")
-		imageOut, err := thumbnailImage(buf, 200)
+		imageOut, err := thumbnailImage(buf, o.Width, o.Height)
 		if err != nil {
 			return nil, errors.New("Failed thumbnail image")
 		}

@@ -762,12 +762,12 @@ func vipsGamma(image *C.VipsImage, Gamma float64) (*C.VipsImage, error) {
 	return out, nil
 }
 
-func thumbnailImage(buf []byte, width int) (*C.VipsImage, error) {
+func thumbnailImage(buf []byte, width int, height int) (*C.VipsImage, error) {
 	var out *C.VipsImage
 
 	length := C.size_t(len(buf))
 	imageBuf := unsafe.Pointer(&buf[0])
-	err := C.vips_thumbnail_resize(imageBuf, length, &out, C.int(width))
+	err := C.vips_thumbnail_resize(imageBuf, length, &out, C.int(width), C.int(height))
 	if err != 0 {
 		return nil, catchVipsError()
 	}
