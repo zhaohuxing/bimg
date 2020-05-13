@@ -608,6 +608,6 @@ int vips_thumbnail_resize(void *buf, size_t len, VipsImage **out, int width, int
 	if (height != 0) {
 		return vips_thumbnail_buffer(buf, len, out, width, "option_string", "n=-1", NULL);
 	} else {
-		return vips_thumbnail_buffer(buf, len, out, width, "height", height, option_string", "n=-1", NULL);
+		return vips_thumbnail_buffer(buf, len, out, width, "height", height, "option_string", "n=-1", NULL);
 	}
 }
