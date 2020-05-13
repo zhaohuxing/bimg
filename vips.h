@@ -605,5 +605,5 @@ int vips_gamma_bridge(VipsImage *in, VipsImage **out, double exponent)
 }
 
 int vips_thumbnail_resize(void *buf, size_t len, VipsImage **out, int width) {
-	return vips_thumbnail_buffer(buf, len, &out, width, "format", "GIF", NULL);
+	return vips_thumbnail_buffer(buf, len, out, width, "format", "GIF", NULL);
 }

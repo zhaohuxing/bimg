@@ -491,7 +491,7 @@ func getGIFImageBuffer(image *C.VipsImage) ([]byte, error) {
 	length := C.size_t(0)
 
 	err := C.int(0)
-	err = C.vips_magicksave_bridge(image, &ptr, &length, NULL)
+	err = C.vips_magicksave_bridge(image, &ptr, &length)
 	if int(err) != 0 {
 		return nil, catchVipsError()
 	}
